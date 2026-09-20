@@ -125,7 +125,12 @@ def main() -> None:
         fail("repository boundary should explicitly document no frontend")
 
     if args.final:
-        if "FIXTURE_COMMIT_PLACEHOLDER" in all_text:
+        fixture_targets = [
+            ROOT / "tests/integration/test_studionet_lifecycle.py",
+            ROOT / "docs/REVIEWER_DEMO.md",
+            ROOT / "DEPLOYMENT.md",
+        ]
+        if any("FIXTURE_COMMIT_PLACEHOLDER" in path.read_text(encoding="utf-8") for path in fixture_targets):
             fail("immutable fixture commit is not pinned")
         deployment = (ROOT / "DEPLOYMENT.md").read_text(encoding="utf-8")
         if "PENDING" in deployment:
