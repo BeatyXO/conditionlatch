@@ -1,0 +1,15 @@
+{
+  "name": "ConditionLatch",
+  "type": "standalone-genlayer-intelligent-contract-primitive",
+  "frontend": false,
+  "network": {
+    "alias": "studionet",
+    "chain_id": 61999,
+    "rpc": "https://studio.genlayer.com/api"
+  },
+  "primary_contract": "contracts/condition_latch.py",
+  "consumer_contract": "contracts/condition_gate.py",
+  "temporal_policies": ["CONSECUTIVE_TRUE", "K_OF_N", "SPACED_TRUE"],
+  "semantic_verdicts": ["TRUE", "FALSE", "INDETERMINATE"],
+  "deployment_evidence": "not-yet-produced"
+}

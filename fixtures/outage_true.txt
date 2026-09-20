@@ -1,0 +1,4 @@
+CONDITIONLATCH IMMUTABLE TEST FIXTURE
+Status: ACTIVE SUSTAINED OUTAGE
+The monitored example service is currently unavailable across the test region.
+This statement is intentionally explicit for deterministic integration testing.

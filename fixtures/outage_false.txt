@@ -1,0 +1,4 @@
+CONDITIONLATCH IMMUTABLE TEST FIXTURE
+Status: NORMAL OPERATION
+The monitored example service is operating normally across the test region.
+No sustained outage is currently present.

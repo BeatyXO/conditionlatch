@@ -1,0 +1,25 @@
+# Final verification checklist
+
+- [ ] Correct dedicated GitHub repository confirmed.
+- [ ] Stable Studionet effective chain ID verified as 61999 immediately before each live write workflow.
+- [ ] `python scripts/preflight.py` passes.
+- [ ] Python compilation passes.
+- [ ] All Direct Mode tests pass without weakening assertions.
+- [ ] Validator dissent rejects a leader proposal.
+- [ ] Changed source bytes reject the leader snapshot.
+- [ ] TRUE/FALSE/INDETERMINATE behavior is demonstrated.
+- [ ] Consecutive policy temporal behavior is demonstrated.
+- [ ] K-of-N full-window requirement is demonstrated.
+- [ ] Spaced TRUE anti-spam timing is demonstrated.
+- [ ] Reset increments generation and invalidates old current-state pin.
+- [ ] Irreversible latch cannot reset.
+- [ ] ConditionLatch deployed and finalized.
+- [ ] Real definition hash recorded.
+- [ ] Live observations recorded.
+- [ ] ConditionGate deployed against finalized ConditionLatch address.
+- [ ] Correct pinned gate consumption succeeds.
+- [ ] Wrong definition or generation is rejected.
+- [ ] Action replay is rejected.
+- [ ] Deployment evidence contains no invented hashes or addresses.
+- [ ] No secrets, `.env`, caches, virtualenvs, artifacts, or frontend files are tracked.
+- [ ] Final GitHub HEAD inspected after push.

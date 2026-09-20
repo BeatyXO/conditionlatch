@@ -1,0 +1,13 @@
+ConditionLatch finishing handoff
+
+Canonical repository: https://github.com/BeatyXO/conditionlatch
+
+The repository is already substantially implemented, hardened, pinned to stable Studionet, and prepared with Direct Mode CI plus a live integration lifecycle. Do not redesign the product and do not add a frontend. Inspect the repository and current GitHub Actions status first.
+
+Your remaining job is limited to failures that still exist in the real GenLayer environment and the live Studionet proof that cannot be fabricated offline. Run `python scripts/preflight.py`, inspect CI, run Direct Mode locally only if needed to reproduce a real failure, then run `gltest tests/integration/test_studionet_lifecycle.py -v -s --network studionet` against stable Studionet (chain 61999 / https://studio.genlayer.com/api). Fix only genuine runtime/tooling issues without weakening validator independence, exact source binding, fail-closed behavior, temporal determinism, generation pinning, append-only history, or ConditionGate replay protection.
+
+Before any live write, verify the effective network is `studionet`, RPC `https://studio.genlayer.com/api`, chain ID 61999. Do not move to Studio-dev/61997 or another network as a workaround.
+
+Produce and record only real evidence: ConditionLatch address/deploy transaction, condition create/source/seal transactions, definition hash, observation transactions and final snapshot/round hashes, ConditionGate address/deploy transaction, allowed gate action, replay rejection evidence, wrong-definition and wrong-generation rejection evidence, exact test results, and final commit SHA. Update `DEPLOYMENT.md`, `BUILD_STATUS.md`, `SUBMISSION.md`, and `proof/VERIFICATION_CHECKLIST.md` with only evidence actually produced.
+
+Final gates: `python scripts/preflight.py --final` must pass; Python compilation and all Direct Mode tests must pass; the live Studionet lifecycle must pass; no secrets/caches/venvs/artifacts/frontend may be tracked; inspect git diff/status and the GitHub HEAD after push. At the end report exactly what changed, real test results, real addresses/transactions/hashes, final definition/snapshot/round hashes, final 40-character commit SHA, and any genuine remaining limitation.
