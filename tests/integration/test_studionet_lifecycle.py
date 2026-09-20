@@ -44,17 +44,15 @@ def test_conditionlatch_full_studionet_lifecycle(default_account):
             0,
             True,
         ]
-    ).transact(account=default_account, consensus_max_rotations=5)
+    ).transact(consensus_max_rotations=5)
     assert tx_execution_succeeded(create_tx)
 
     source_tx = latch.add_source(args=[1, FIXTURE_TRUE_URL]).transact(
-        account=default_account,
         consensus_max_rotations=5,
     )
     assert tx_execution_succeeded(source_tx)
 
     seal_tx = latch.seal_condition(args=[1]).transact(
-        account=default_account,
         consensus_max_rotations=5,
     )
     assert tx_execution_succeeded(seal_tx)
@@ -67,7 +65,6 @@ def test_conditionlatch_full_studionet_lifecycle(default_account):
     observation_receipts = []
     for index in range(3):
         tx = latch.observe(args=[1]).transact(
-            account=default_account,
             consensus_max_rotations=5,
             wait_interval=1500,
             wait_retries=40,
@@ -95,13 +92,11 @@ def test_conditionlatch_full_studionet_lifecycle(default_account):
 
     action_hash = _tx_hashish("conditionlatch-live-gate-action-v1")
     allowed = gate.consume(args=[action_hash]).transact(
-        account=default_account,
         consensus_max_rotations=5,
     )
     assert tx_execution_succeeded(allowed)
 
     replay = gate.consume(args=[action_hash]).transact(
-        account=default_account,
         consensus_max_rotations=5,
     )
     assert tx_execution_failed(replay)
