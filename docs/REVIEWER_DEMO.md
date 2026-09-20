@@ -1,6 +1,6 @@
 # Reviewer demo
 
-A strong live demonstration should use a stable, immutable public fixture source pinned to a Git commit so all validators can fetch exactly the same bytes.
+A strong live demonstration should use the repository's immutable public fixture source so all validators can fetch exactly the same bytes.
 
 Recommended scenario: **service outage latch with `CONSECUTIVE_TRUE = 3`.**
 
@@ -20,8 +20,12 @@ Do not fake a negative transaction hash if the CLI/runtime does not expose one. 
 
 ## Canonical immutable fixture
 
-Before live proof, `scripts/pin_fixture_commit.py` replaces `FIXTURE_COMMIT_PLACEHOLDER` with the first real Git commit containing `fixtures/outage_true.txt`. The canonical source then becomes:
+The live TRUE fixture is pinned to clean repository commit:
 
-`https://raw.githubusercontent.com/BeatyXO/conditionlatch/FIXTURE_COMMIT_PLACEHOLDER/fixtures/outage_true.txt`
+`a820417c7b4fd6c74f20d621fcc4801cbeec222b`
+
+Canonical source:
+
+`https://raw.githubusercontent.com/BeatyXO/conditionlatch/a820417c7b4fd6c74f20d621fcc4801cbeec222b/fixtures/outage_true.txt`
 
 Never replace the commit SHA with `main`, `master`, or `HEAD` in final proof.
