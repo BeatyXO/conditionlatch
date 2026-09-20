@@ -37,6 +37,6 @@ Never invent missing proof.
 
 ## Immutable fixture pin
 
-Fixture commit: `FIXTURE_COMMIT_PLACEHOLDER`
+Fixture commit: `a820417c7b4fd6c74f20d621fcc4801cbeec222b`
 
-Canonical TRUE fixture: `https://raw.githubusercontent.com/BeatyXO/conditionlatch/FIXTURE_COMMIT_PLACEHOLDER/fixtures/outage_true.txt`
+Canonical TRUE fixture: `https://raw.githubusercontent.com/BeatyXO/conditionlatch/a820417c7b4fd6c74f20d621fcc4801cbeec222b/fixtures/outage_true.txt`
