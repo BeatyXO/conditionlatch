@@ -73,4 +73,4 @@ pytest -q
 
 ## Verification flow
 
-GitHub Actions runs the pinned Direct Mode suite on every push. The repository also includes a full Studionet lifecycle test, an immutable-fixture pinning script, `preflight.py`, and `preflight.py --final`. Live deployment evidence is intentionally kept out of documentation until a real Studionet run produces it.
+A GitHub Actions workflow is configured to run the pinned Direct Mode suite on pushes and pull requests; no workflow result is claimed until GitHub actually executes it. The repository also includes a full Studionet lifecycle test, an immutable-fixture pinning script, `preflight.py`, and `preflight.py --final`. Live deployment evidence is intentionally kept out of documentation until a real Studionet run produces it.
