@@ -16,7 +16,7 @@ A source can disappear or fail. The observation can still finalize fail-closed a
 
 ## Malformed or prompt-injected source text
 
-The classifier prompt explicitly limits authority to the frozen condition and criteria. Source text is evidence, not instructions. Malformed model output canonicalizes to INDETERMINATE. The finishing agent should add adversarial prompt-injection fixtures and verify that no source text can change policy parameters or request an action.
+The classifier prompt explicitly limits authority to the frozen condition and criteria. Source text is evidence, not instructions. Malformed model output canonicalizes to INDETERMINATE. Direct Mode coverage includes adversarial source text that attempts to order an immediate latch/action; even when the semantic round is TRUE, deterministic threshold logic still controls whether the condition can latch.
 
 ## Temporal gaming
 
