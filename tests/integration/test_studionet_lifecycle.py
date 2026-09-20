@@ -13,7 +13,7 @@ import hashlib
 from gltest import get_contract_factory
 from gltest.assertions import tx_execution_failed, tx_execution_succeeded
 
-FIXTURE_COMMIT = "FIXTURE_COMMIT_PLACEHOLDER"
+FIXTURE_COMMIT = "a820417c7b4fd6c74f20d621fcc4801cbeec222b"
 FIXTURE_TRUE_URL = (
     "https://raw.githubusercontent.com/BeatyXO/conditionlatch/"
     + FIXTURE_COMMIT
