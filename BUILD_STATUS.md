@@ -2,7 +2,7 @@
 
 Canonical repository: `https://github.com/BeatyXO/conditionlatch`
 
-## Implemented before live deployment
+## Completed before Codex handoff
 
 - primary ConditionLatch contract;
 - DRAFT → ACTIVE → LATCHED lifecycle;
@@ -13,21 +13,29 @@ Canonical repository: `https://github.com/BeatyXO/conditionlatch`
 - exact source snapshot binding;
 - 5,000-byte per-source bound with no hidden/unprompted hashed tail;
 - fail-closed HTTP, empty/oversized response, and model-error handling;
-- prompt-injection boundary that treats source material as untrusted evidence;
+- prompt-injection authority boundary;
 - deterministic CONSECUTIVE_TRUE, K_OF_N, and SPACED_TRUE policies;
 - append-only observation links preserved across reset generations;
 - irreversible and resettable modes with generation overflow guard;
 - generation invalidation after reset;
 - typed `is_latched` consumer interface;
 - ConditionGate typed IC-to-IC consumer with pinned definition/generation, replay protection, and consumption event;
-- expanded Direct Mode adversarial tests;
-- GitHub Actions Direct Mode workflow;
-- full Studionet lifecycle integration test;
-- immutable fixture pinning script;
-- normal and final repository preflight;
-- stable Studionet / chain 61999 network configuration;
-- no frontend.
+- broad Direct Mode test suite, including adversarial validator/snapshot/temporal cases;
+- stable Studionet lifecycle integration test;
+- immutable TRUE fixture pinned to clean commit `a820417c7b4fd6c74f20d621fcc4801cbeec222b`;
+- repository preflight and final-proof preflight;
+- stable Studionet / chain 61999 configuration;
+- no frontend;
+- clean source materialized to `BeatyXO/conditionlatch`.
 
-## Remaining live-only proof
+## Checks completed here
 
-The only evidence that must not be fabricated is the actual stable Studionet deployment/lifecycle proof: finalized addresses, transaction evidence, live observation hashes, gate success/rejection evidence, and final post-deployment documentation. `DEPLOYMENT.md` remains explicit about these fields until they are produced.
+- `python scripts/preflight.py`: PASS after hardening and again after fixture pinning.
+- `python -m compileall -q contracts tests scripts`: PASS.
+- source tree and repository hygiene were audited locally.
+
+## Environment-dependent checks still required
+
+`genlayer-test` is not installed in this execution container and package installation is blocked by the container's network/DNS environment, so the Direct Mode suite was not falsely reported as executed. A GitHub Actions workflow is present, but push and same-repository PR events created through the connected GitHub integration did not start workflow runs for this new repository.
+
+Codex therefore only needs to execute the pinned Direct Mode suite in its network-enabled GenLayer environment, fix any **real** runtime incompatibility that appears without weakening protocol invariants, then produce the real stable Studionet lifecycle/deployment evidence and finish deployment documentation.
