@@ -1,41 +1,30 @@
-# Build status
+# Build and verification status
 
 Canonical repository: `https://github.com/BeatyXO/conditionlatch`
 
-## Completed before Codex handoff
+## Verified implementation
 
-- primary ConditionLatch contract;
-- DRAFT → ACTIVE → LATCHED lifecycle;
-- frozen source namespace and 64-hex definition hash;
-- TRUE / FALSE / INDETERMINATE semantic vocabulary;
-- storage-to-memory copying before nondeterministic execution;
-- independent leader/validator source re-fetch and semantic re-evaluation;
-- exact source snapshot binding;
-- 5,000-byte per-source bound with no hidden/unprompted hashed tail;
-- fail-closed HTTP, empty/oversized response, and model-error handling;
-- prompt-injection authority boundary;
-- deterministic CONSECUTIVE_TRUE, K_OF_N, and SPACED_TRUE policies;
-- append-only observation links preserved across reset generations;
-- irreversible and resettable modes with generation overflow guard;
-- generation invalidation after reset;
-- typed `is_latched` consumer interface;
-- ConditionGate typed IC-to-IC consumer with pinned definition/generation, replay protection, and consumption event;
-- broad Direct Mode test suite, including adversarial validator/snapshot/temporal cases;
-- stable Studionet lifecycle integration test;
-- immutable TRUE fixture pinned to clean commit `a820417c7b4fd6c74f20d621fcc4801cbeec222b`;
-- repository preflight and final-proof preflight;
-- stable Studionet / chain 61999 configuration;
-- no frontend;
-- clean source materialized to `BeatyXO/conditionlatch`.
+- ConditionLatch preserves the frozen source namespace, immutable definition hash, independent validator re-fetch and semantic evaluation, exact source snapshot binding, fail-closed `INDETERMINATE` behavior, deterministic temporal policies, append-only history, generation invalidation, reset rules, and typed IC-to-IC `is_latched` interface.
+- ConditionGate uses a typed IC-to-IC call pinned to condition ID, definition hash, and generation, and rejects replayed action hashes.
+- No frontend is included.
 
-## Checks completed here
+## Runtime compatibility fixes
 
-- `python scripts/preflight.py`: PASS after hardening and again after fixture pinning.
-- `python -m compileall -q contracts tests scripts`: PASS.
-- source tree and repository hygiene were audited locally.
+- Stable GenLayer events require keyword blob fields in the event constructor before calling `.emit()`; all contract events now follow this API.
+- Stable `nondet.web.Response` exposes HTTP status as `.status`; source availability checks now use that field and fail closed on non-2xx responses.
+- The Studio schema fallback in the pinned Python client hex-encodes contract source as ASCII. Non-ASCII punctuation in contract module docstrings prevented schema retrieval; those docstrings now use ASCII punctuation.
+- ConditionGate deployment requires the constructor address argument to be encoded as `CalldataAddress`. The lifecycle now passes that typed value instead of a plain string.
+- Direct Mode time-warp tests now synchronize the transaction message timestamp as well as the test clock. Contract temporal logic remains unchanged.
 
-## Environment-dependent checks still required
+## Test and live results
 
-`genlayer-test` is not installed in this execution container and package installation is blocked by the container's network/DNS environment, so the Direct Mode suite was not falsely reported as executed. A GitHub Actions workflow is present, but push and same-repository PR events created through the connected GitHub integration did not start workflow runs for this new repository.
+- Dependency: `genlayer-test==0.29.2` (already installed).
+- Direct Mode: `python -m pytest tests/direct -q` — **33 passed**.
+- Python compilation: `python -m compileall -q contracts tests scripts` — **PASS**.
+- Standard preflight: `python scripts/preflight.py` — **PASS**.
+- Stable Studionet lifecycle: `gltest tests/integration/test_studionet_lifecycle.py -v -s --network studionet` — **1 passed** on Studionet chain 61999.
+- Full deployment and rejection evidence is recorded in `DEPLOYMENT.md`.
 
-Codex therefore only needs to execute the pinned Direct Mode suite in its network-enabled GenLayer environment, fix any **real** runtime incompatibility that appears without weakening protocol invariants, then produce the real stable Studionet lifecycle/deployment evidence and finish deployment documentation.
+## Final gate
+
+`python scripts/preflight.py --final` checks the fixture pin and requires deployment evidence to be populated. It does not validate or generate a Git commit SHA; record the resulting GitHub HEAD in the release record after pushing.

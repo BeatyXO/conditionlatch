@@ -1,4 +1,4 @@
-# Submission draft
+# Submission
 
 Canonical repository: `https://github.com/BeatyXO/conditionlatch`
 
@@ -11,5 +11,9 @@ ConditionLatch converts repeated semantic observations of real-world public evid
 ## Submission boundary
 Contract-only standalone Intelligent Contract primitive. No frontend.
 
-## Evidence still required before submission
-Do not submit placeholders. Add finalized Studionet addresses, deploy/write transaction evidence, real Direct Mode results, and the final commit SHA only after they exist.
+## Verification evidence
+
+- Direct Mode: `python -m pytest tests/direct -q` — **33 passed**.
+- Stable Studionet: `gltest tests/integration/test_studionet_lifecycle.py -v -s --network studionet` — **1 passed**, chain ID `61999`.
+- Finalized contract addresses, definition hash, observation hashes, and transaction/revert evidence are recorded in `DEPLOYMENT.md`.
+- Final GitHub commit: record the 40-character `main` HEAD after the completed push.

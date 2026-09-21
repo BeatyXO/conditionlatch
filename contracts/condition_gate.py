@@ -1,6 +1,6 @@
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
 
-"""ConditionGate — tiny consumer proving typed IC-to-IC reuse of ConditionLatch."""
+"""ConditionGate - tiny consumer proving typed IC-to-IC reuse of ConditionLatch."""
 
 from genlayer import *
 from dataclasses import dataclass
@@ -89,11 +89,14 @@ class ConditionGate(gl.Contract):
             definition_hash=self.expected_definition_hash,
         )
         self.consumption_count = consumption_id
-        ActionConsumed(consumption_id, self.condition_id, self.expected_generation).emit(
+        ActionConsumed(
+            consumption_id,
+            self.condition_id,
+            self.expected_generation,
             action_hash=action,
             definition_hash=self.expected_definition_hash,
             consumed_by=str(gl.message.sender_address),
-        )
+        ).emit()
         return consumption_id
 
     @gl.public.view

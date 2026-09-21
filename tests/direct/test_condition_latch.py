@@ -33,6 +33,14 @@ def deploy(direct_vm, direct_deploy):
     return direct_deploy(CONTRACT)
 
 
+def warp_transaction_time(direct_vm, timestamp):
+    """Keep Direct Mode's transaction message clock and Python clock in sync."""
+    direct_vm.warp(timestamp)
+    import genlayer.gl as gl
+
+    gl.message_raw["datetime"] = timestamp
+
+
 def create_and_seal(direct_vm, direct_deploy, policy=1, required=2, window=0, spacing=0, irreversible=True):
     c = deploy(direct_vm, direct_deploy)
     direct_vm.sender = alice_address()
@@ -94,7 +102,7 @@ def test_consecutive_true_latches_only_after_required_rounds(direct_vm, direct_d
     first = c.observe(cid)
     assert c.get_observation(first)["verdict_name"] == "TRUE"
     assert c.is_latched(cid, definition_hash, 1) is False
-    direct_vm.warp(ONE_HOUR)
+    warp_transaction_time(direct_vm, ONE_HOUR)
     second = c.observe(cid)
     assert c.get_condition(cid)["status_name"] == "LATCHED"
     assert c.is_latched(cid, definition_hash, 1) is True
@@ -106,7 +114,7 @@ def test_false_resets_consecutive_streak(direct_vm, direct_deploy):
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     direct_vm.clear_mocks()
-    direct_vm.warp(ONE_HOUR)
+    warp_transaction_time(direct_vm, ONE_HOUR)
     mock_round(direct_vm, BODY_FALSE, verdict("FALSE", "RESTORED", "service is normal"))
     c.observe(cid)
     assert c.get_condition(cid)["current_streak"] == 0
@@ -122,7 +130,7 @@ def test_indeterminate_fails_closed_for_consecutive_policy(direct_vm, direct_dep
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     direct_vm.clear_mocks()
-    direct_vm.warp(ONE_HOUR)
+    warp_transaction_time(direct_vm, ONE_HOUR)
     mock_round(direct_vm, "status page is unavailable", verdict("INDETERMINATE", "INSUFFICIENT", "source unavailable"))
     c.observe(cid)
     assert c.get_condition(cid)["current_streak"] == 0
@@ -148,13 +156,13 @@ def test_spaced_true_ignores_true_too_close(direct_vm, direct_deploy):
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     direct_vm.clear_mocks()
-    direct_vm.warp(ONE_HOUR)
+    warp_transaction_time(direct_vm, ONE_HOUR)
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     assert c.get_condition(cid)["spaced_true_count"] == 1
     assert c.is_latched(cid, definition_hash, 1) is False
     direct_vm.clear_mocks()
-    direct_vm.warp(THREE_HOURS)
+    warp_transaction_time(direct_vm, THREE_HOURS)
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     assert c.is_latched(cid, definition_hash, 1) is True
@@ -203,7 +211,7 @@ def test_k_of_n_does_not_latch_on_partial_window(direct_vm, direct_deploy):
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     direct_vm.clear_mocks()
-    direct_vm.warp(ONE_HOUR)
+    warp_transaction_time(direct_vm, ONE_HOUR)
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     assert c.is_latched(cid, definition_hash, 1) is False
@@ -249,7 +257,7 @@ def test_spaced_true_accepts_exact_boundary(direct_vm, direct_deploy):
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     direct_vm.clear_mocks()
-    direct_vm.warp(ONE_HOUR)
+    warp_transaction_time(direct_vm, ONE_HOUR)
     mock_round(direct_vm, BODY_TRUE, verdict("TRUE"))
     c.observe(cid)
     assert c.is_latched(cid, definition_hash, 1) is True

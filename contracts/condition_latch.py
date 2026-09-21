@@ -1,6 +1,6 @@
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
 
-"""ConditionLatch — consensus-backed temporal stabilization for semantic facts.
+"""ConditionLatch - consensus-backed temporal stabilization for semantic facts.
 
 The LLM never decides whether a condition should trigger an action. Validators
 only classify one bounded observation round as TRUE, FALSE, or INDETERMINATE
@@ -366,7 +366,8 @@ class ConditionLatch(gl.Contract):
         for index, url in enumerate(source_urls):
             try:
                 response = gl.nondet.web.get(url)
-                status_code = int(getattr(response, "status_code", 200))
+                # GenLayer's stable nondet.web.Response exposes `status`.
+                status_code = int(getattr(response, "status", 200))
                 body = getattr(response, "body", b"")
                 if status_code < 200 or status_code >= 300:
                     raise Exception("non-success HTTP status")
@@ -579,7 +580,7 @@ class ConditionLatch(gl.Contract):
             last_qualified_true_at=u256(0),
         )
         self.condition_count = condition_id
-        ConditionCreated(condition_id, gl.message.sender_address, u8(policy_int)).emit(title=title_clean)
+        ConditionCreated(condition_id, gl.message.sender_address, u8(policy_int), title=title_clean).emit()
         return condition_id
 
     @gl.public.write
@@ -612,7 +613,7 @@ class ConditionLatch(gl.Contract):
         condition.definition_hash = definition_hash
         condition.status = u8(STATUS_ACTIVE)
         condition.sealed_at = u256(message_timestamp())
-        ConditionSealed(condition_id, condition.generation).emit(definition_hash=definition_hash)
+        ConditionSealed(condition_id, condition.generation, definition_hash=definition_hash).emit()
         return definition_hash
 
     @gl.public.write
@@ -661,15 +662,20 @@ class ConditionLatch(gl.Contract):
         if self._should_latch(condition, observation):
             condition.status = u8(STATUS_LATCHED)
             condition.latched_at = u256(now)
-            ConditionLatched(condition_id, condition.generation).emit(
+            ConditionLatched(
+                condition_id,
+                condition.generation,
                 definition_hash=condition.definition_hash,
                 round_hash=round_hash,
-            )
+            ).emit()
 
-        ObservationFinalized(round_id, condition_id, observation.verdict).emit(
+        ObservationFinalized(
+            round_id,
+            condition_id,
+            observation.verdict,
             snapshot_hash=observation.snapshot_hash,
             round_hash=observation.round_hash,
-        )
+        ).emit()
         return round_id
 
     @gl.public.write
@@ -690,7 +696,7 @@ class ConditionLatch(gl.Contract):
         condition.current_streak = u16(0)
         condition.spaced_true_count = u16(0)
         condition.last_qualified_true_at = u256(0)
-        ConditionReset(condition_id, condition.generation).emit(definition_hash=condition.definition_hash)
+        ConditionReset(condition_id, condition.generation, definition_hash=condition.definition_hash).emit()
         return condition.generation
 
     # ------------------------------ views ------------------------------
