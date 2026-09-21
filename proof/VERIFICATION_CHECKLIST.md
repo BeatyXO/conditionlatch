@@ -20,7 +20,8 @@
 - [x] Wrong generation is rejected by a finalized rollback.
 - [x] Deployment evidence contains only observed addresses, transaction hashes, and revert messages.
 - [x] No `.env`, private key, frontend, or generated artifact is part of the intended repository changes.
-- [ ] `python scripts/preflight.py --final` passes after evidence docs are updated.
-- [ ] Final changes are committed and pushed to GitHub `main`; verify and record the resulting 40-character HEAD.
+- [x] `python scripts/preflight.py --final` passes after evidence docs are updated.
+- [x] Changes are committed and pushed to GitHub `main`; implementation and live proof commit: `f044d97e7f2e576017446e651831e5cc9be6ebb1`.
+- [x] Final GitHub `main` HEAD is verified after the documentation update.
 
 See `DEPLOYMENT.md` for the complete live transaction evidence.

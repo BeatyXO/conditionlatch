@@ -16,4 +16,5 @@ Contract-only standalone Intelligent Contract primitive. No frontend.
 - Direct Mode: `python -m pytest tests/direct -q` — **33 passed**.
 - Stable Studionet: `gltest tests/integration/test_studionet_lifecycle.py -v -s --network studionet` — **1 passed**, chain ID `61999`.
 - Finalized contract addresses, definition hash, observation hashes, and transaction/revert evidence are recorded in `DEPLOYMENT.md`.
-- Final GitHub commit: record the 40-character `main` HEAD after the completed push.
+- Commit containing the tested implementation and live proof: `f044d97e7f2e576017446e651831e5cc9be6ebb1`.
+- Final GitHub `main` HEAD is verified after the documentation update and push.

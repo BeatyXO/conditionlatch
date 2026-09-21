@@ -24,6 +24,7 @@ Canonical repository: `https://github.com/BeatyXO/conditionlatch`
 - Standard preflight: `python scripts/preflight.py` — **PASS**.
 - Stable Studionet lifecycle: `gltest tests/integration/test_studionet_lifecycle.py -v -s --network studionet` — **1 passed** on Studionet chain 61999.
 - Full deployment and rejection evidence is recorded in `DEPLOYMENT.md`.
+- Commit containing the verified runtime fixes and lifecycle proof: `f044d97e7f2e576017446e651831e5cc9be6ebb1`.
 
 ## Final gate
 

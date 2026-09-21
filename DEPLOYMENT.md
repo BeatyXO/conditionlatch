@@ -39,3 +39,5 @@ Result: **1 passed**. The final run produced the following finalized contracts a
 An earlier Gate deployment attempt finalized with a contract error because the lifecycle passed the latch address as a plain string. The failed transaction was `0x7ba13c8966c53f8cb69297b08d8368960ccfe4c5310c826baf901732abfaaa4e`; its error was `AttributeError: 'str' object has no attribute 'as_bytes'`. The lifecycle now passes a typed `CalldataAddress`; the corrected Gate deployment and lifecycle above succeeded.
 
 Immutable TRUE fixture commit: `a820417c7b4fd6c74f20d621fcc4801cbeec222b`.
+
+Commit containing the verified runtime fixes, lifecycle test, and live evidence: `f044d97e7f2e576017446e651831e5cc9be6ebb1`.
